@@ -16,9 +16,9 @@
 
 Complex multi-hop questions rarely yield reliable answers from a single search. An effective deep-search agent must understand the question, call retrieval tools, read web evidence, and continually adjust its next action based on tool observations over multiple turns.
 
-PrimerSearcher builds autonomous deep-search agents for these problems. It post-trains Qwen3-30B-A3B-Thinking on high-quality long-trajectory data, further internalizing ReAct-style reasoning, search, web browsing, and evidence-use behavior from an external workflow into the model parameters. This enables longer, more coherent tool use and evidence-driven reasoning.
+PrimerSearcher builds autonomous deep-search agents for these problems. It post-trains Qwen3-30B-A3B-Thinking-2507 on high-quality long-trajectory data, further internalizing ReAct-style reasoning, search, web browsing, and evidence-use behavior from an external workflow into the model parameters. This enables longer, more coherent tool use and evidence-driven reasoning.
 
-On the 2026 Tianchi Data+AI in-house evaluation set, the base Qwen3-30B-A3B model achieves 28.0% accuracy. SFT raises this to 42.0%, and RL further raises it to 53.0%. The agent's autonomous research trajectories on complex questions also become substantially longer: average tool-call rounds increase from 2.33 to 52.4, while the maximum rises from 4 to 150.
+On the 2026 Tianchi Data+AI in-house evaluation set, the base Qwen3-30B-A3B-Thinking-2507 model achieves 28.0% accuracy. SFT raises this to 42.0%, and RL further raises it to 53.0%. The agent's autonomous research trajectories on complex questions also become substantially longer: average tool-call rounds increase from 2.33 to 52.4, while the maximum rises from 4 to 150.
 
 ## 🌟 Highlights
 
@@ -34,7 +34,7 @@ On the 2026 Tianchi Data+AI in-house evaluation set, the base Qwen3-30B-A3B mode
 
 - **Efficient, verifiable post-training: long-context SFT and off-policy GRPO**
 
-  - **122K long-trajectory SFT that internalizes the tool-use protocol.** LoRA fine-tunes `q_proj`, `k_proj`, `v_proj`, and `o_proj` on Qwen3-30B-A3B-Thinking with a 122,880-token context window and `ignore_empty_think` loss handling. The model learns complete ReAct trajectories, tool-call formats, and evidence-grounded final answers rather than merely fitting short answers.
+  - **122K long-trajectory SFT that internalizes the tool-use protocol.** LoRA fine-tunes `q_proj`, `k_proj`, `v_proj`, and `o_proj` on Qwen3-30B-A3B-Thinking-2507 with a 122,880-token context window and `ignore_empty_think` loss handling. The model learns complete ReAct trajectories, tool-call formats, and evidence-grounded final answers rather than merely fitting short answers.
 
   - **Parameter and memory efficiency for long contexts.** SFT uses BF16, LoRA, ZeRO-3, FlashAttention, sequence packing, padding-free training, gradient checkpointing, and Liger Kernel. It retains the ability to train on 122K-long trajectories while reducing memory waste from activations, padding, and optimizer state, and saves only the required LoRA adapters.
 
@@ -95,7 +95,7 @@ The reference JSONL must contain `id` and `answer`. Semantic judging requires `D
 
 ### 3. SFT Training
 
-**Linux/GPU environment only.** The default script trains Qwen3-30B-A3B with LoRA and a 122K context window. It requires Swift, DeepSpeed, and two GPUs. Before running it, update the base-model path, training/validation data paths, and output directory in the script.
+**Linux/GPU environment only.** The default script trains Qwen3-30B-A3B-Thinking-2507 with LoRA and a 122K context window. It requires Swift, DeepSpeed, and two GPUs. Before running it, update the base-model path, training/validation data paths, and output directory in the script.
 
 ```bash
 bash sft/sft_qwen3_30b_lora_2gpu_rtx6000_122k.sh
@@ -128,7 +128,7 @@ PrimerSearcher releases the complete path from Agent execution through SFT to of
 2. **SFT dataset** — For learning long-horizon ReAct behavior, the tool-call protocol, and evidence-grounded answers.
    [ModelScope dataset](https://www.modelscope.cn/datasets/YuhangJu/PrimerSearcher-SFT-Data)
 
-3. **SFT training recipe** — A 122K long-context LoRA training script for Qwen3-30B-A3B, plus ZeRO-3, FlashAttention, packing, padding-free, and related configuration.
+3. **SFT training recipe** — A 122K long-context LoRA training script for Qwen3-30B-A3B-Thinking-2507, plus ZeRO-3, FlashAttention, packing, padding-free, and related configuration.
    [Browse the SFT recipe](sft/)
 
 4. **SFT model** — The supervised-fine-tuned PrimerSearcher-SFT-30B-A3B checkpoint.

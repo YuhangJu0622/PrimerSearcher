@@ -16,9 +16,9 @@
 
 复杂的多跳问题通常无法通过一次检索得到可靠答案。一个有效的深度检索 Agent 需要在多轮交互中理解问题、调用检索工具、阅读网页证据，并依据工具观察结果持续调整下一步行动。
 
-PrimerSearcher 面向这类复杂问题构建自主深度检索 Agent。项目以高质量长轨迹数据为基础，对 Qwen3-30B-A3B-Thinking 进行后训练，将 ReAct 式的思考、搜索、网页访问与证据利用行为从外部工作流进一步内化到模型参数中，使模型能够完成更长程、更连贯的工具使用与证据驱动推理。
+PrimerSearcher 面向这类复杂问题构建自主深度检索 Agent。项目以高质量长轨迹数据为基础，对 Qwen3-30B-A3B-Thinking-2507 进行后训练，将 ReAct 式的思考、搜索、网页访问与证据利用行为从外部工作流进一步内化到模型参数中，使模型能够完成更长程、更连贯的工具使用与证据驱动推理。
 
-在 2026 天池 Data+AI 自建评测集上，基础 Qwen3-30B-A3B 模型的正确率为 28.0%；经过 SFT 微调后提升至 42.0%，再经 RL 微调后达到 53.0%。模型在复杂问题中可维持的自主检索轨迹也显著延长：平均工具调用轮次由 2.33 增至 52.4，最大轮次由 4 提升至 150。
+在 2026 天池 Data+AI 自建评测集上，基础 Qwen3-30B-A3B-Thinking-2507 模型的正确率为 28.0%；经过 SFT 微调后提升至 42.0%，再经 RL 微调后达到 53.0%。模型在复杂问题中可维持的自主检索轨迹也显著延长：平均工具调用轮次由 2.33 增至 52.4，最大轮次由 4 提升至 150。
 
 ## 🌟 亮点
 
@@ -31,7 +31,7 @@ PrimerSearcher 面向这类复杂问题构建自主深度检索 Agent。项目�
 
 - **高效、可验证的后训练：长上下文 SFT 与 Off-Policy GRPO**
 
-  - **122K 长轨迹 SFT。** 在 Qwen3-30B-A3B-Thinking 上以 LoRA 微调 `q_proj`、`k_proj`、`v_proj`、`o_proj`，支持 122,880 token 上下文与 `ignore_empty_think` 损失处理，使模型学习完整的 ReAct 轨迹、工具调用格式和基于证据的最终回答，而非只拟合短答案。
+  - **122K 长轨迹 SFT。** 在 Qwen3-30B-A3B-Thinking-2507 上以 LoRA 微调 `q_proj`、`k_proj`、`v_proj`、`o_proj`，支持 122,880 token 上下文与 `ignore_empty_think` 损失处理，使模型学习完整的 ReAct 轨迹、工具调用格式和基于证据的最终回答，而非只拟合短答案。
   - **面向长上下文的参数与显存效率。** SFT 使用 BF16、LoRA、ZeRO-3、FlashAttention、sequence packing、padding-free、梯度检查点和 Liger kernel，在保留 122K 长轨迹训练能力的同时减少显存浪费，并仅保存必要的 LoRA adapter。
   - **有限步、组内相对的 GRPO 更新。** RL 每个问题默认采样 4 条 Agent 工具交互轨迹，以 GRPO 计算同题轨迹的组内均值中心化优势，不使用组内标准差归一化；训练保留 rollout log-prob，并以 PPO-clip 形式进行有限轮更新。
   - **可验证奖励与可审计训练闭环。** Reward 按 `0.8 × 答案正确性 + 0.2 × 最终答案及轨迹格式正确性` 计算：先做归一化精确匹配，仅在失败时调用并持久缓存 LLM 等价性裁判；裁判不可用或输出不明确时 fail-closed。训练启动前会验证模型、LoRA、数据、Search 与 Judge，并保存逐条轨迹、运行日志和可选资源遥测。
@@ -89,7 +89,7 @@ python agent/scripts/score.py \
 
 ### 3. SFT 训练
 
-**仅限 Linux/GPU 环境。** 默认脚本使用 Qwen3-30B-A3B、LoRA 和 122K 上下文训练，需要安装 Swift、DeepSpeed，并提供 2 张 GPU。执行前，请修改脚本中的基础模型路径、训练/验证数据路径和输出目录。
+**仅限 Linux/GPU 环境。** 默认脚本使用 Qwen3-30B-A3B-Thinking-2507、LoRA 和 122K 上下文训练，需要安装 Swift、DeepSpeed，并提供 2 张 GPU。执行前，请修改脚本中的基础模型路径、训练/验证数据路径和输出目录。
 
 ```bash
 bash sft/sft_qwen3_30b_lora_2gpu_rtx6000_122k.sh
@@ -120,7 +120,7 @@ PrimerSearcher 开源覆盖从 Agent 运行、SFT 到 Off-Policy GRPO 后训练�
    [查看 Agent 代码](agent/)
 2. **SFT 数据集** — 用于学习长轨迹 ReAct、工具调用协议和证据驱动回答。
    [ModelScope 数据集](https://www.modelscope.cn/datasets/YuhangJu/PrimerSearcher-SFT-Data)
-3. **SFT 训练配方** — 包含 Qwen3-30B-A3B 的 122K 长上下文 LoRA 训练脚本，以及 ZeRO-3、FlashAttention、packing、padding-free 等配置。
+3. **SFT 训练配方** — 包含 Qwen3-30B-A3B-Thinking-2507 的 122K 长上下文 LoRA 训练脚本，以及 ZeRO-3、FlashAttention、packing、padding-free 等配置。
    [查看 SFT 训练配方](sft/)
 4. **SFT 模型** — 完成监督微调后的 PrimerSearcher-SFT-30B-A3B checkpoint。
    [ModelScope 模型](https://www.modelscope.cn/models/YuhangJu/PrimerSearcher-SFT-30B-A3B)
