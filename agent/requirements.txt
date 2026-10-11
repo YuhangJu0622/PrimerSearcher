@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+openai
+httpx
+beautifulsoup4
+python-dotenv
+json5
+tiktoken
+pydantic
+requests
+pyyaml

@@ -1,0 +1,9 @@
+
+# Local tool credentials
+.secrets/
+src/jina.txt
+src/serper.txt
+src/nodesk.txt
+# Local runtime state and per-sample tool logs
+outputs/tool_state/
+outputs/tool_logs/

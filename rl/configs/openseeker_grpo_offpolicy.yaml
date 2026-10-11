@@ -1,0 +1,56 @@
+# Canonical experiment values. scripts/training/train_grpo_offpolicy.sh passes these as Hydra
+# overrides so the file remains readable independently of VERL's config search path.
+algorithm: grpo
+# Dr.GRPO-style advantage scaling: subtract each prompt group's mean reward,
+# but do not divide by its per-group standard deviation.
+norm_adv_by_std_in_grpo: false
+reward:
+  answer_weight: 0.8
+  format_weight: 0.2
+  exact_match_first: true
+  llm_judge_on_exact_miss: true
+rollout:
+  backend: vllm
+  mode: async
+  n: 4
+  max_prompt_length: 2048
+  max_response_length: 131072
+  agent_loop: openseeker_agent
+  stability:
+    regular_assistant_turns: 150
+    forced_answer_attempts: 3
+    forced_answer_timeout_attempts: 5
+    generation_retries: 3
+    duplicate_executions: 2
+    duplicate_attempt_limit: 5
+model:
+  base: /root/autodl-tmp/modelscope_cache/Qwen/Qwen3-30B-A3B-Thinking-2507
+  adapter: /root/autodl-tmp/output/qwen3_30b_lora_2gpu_rtx6000_122k_exp6/v0-20260802-172409/checkpoint-440
+  lora_rank: 16
+  lora_alpha: 32
+  target_modules: [q_proj, k_proj, v_proj, o_proj]
+  use_liger: true
+  liger_frozen_expert_gradients: skip
+  actor_model_dtype: bfloat16
+resources:
+  validated_gpus: 4
+  gpu_memory_gib: 96
+  host_memory_gib: 440
+  rollout_tensor_parallel_size: 2
+  actor_ulysses_sequence_parallel_size: 2
+  agent_loop_workers: 2
+  reward_workers: 2
+
+training:
+  train_batch_size: 16
+  ppo_mini_batch_size: 4
+  ppo_epochs: 1
+  trajectory_count_per_rollout: 96
+  trajectory_count_per_update: 24
+  optimizer_updates_per_rollout: 4
+  execution: collect_full_rollout_then_update
+  off_policy:
+    trainer_mode: sync
+    use_rollout_log_probs: true
+    bypass_mode: true
+    loss_type: ppo_clip

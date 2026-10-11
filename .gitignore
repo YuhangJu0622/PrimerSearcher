@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+**/.venv/
+
+# Environment variables
+# Keep only intentionally non-secret examples/templates in version control.
+*.env
+*.env.*
+!*.example.env
+!.env.example
+!*.env.template
+
+# Jupyter automatically creates duplicate working copies, which can contain
+# configuration values or notebook outputs that should not be published.
+**/.ipynb_checkpoints/
+
+# IDE
+.DS_Store
+.idea/
+.vscode/
+
+# Logs
+agent/logs/
+output.log
+
+# Egg-info
+*.egg-info/
+
+# Large data files
+*.jsonl
+agent/data/
+*.log
+

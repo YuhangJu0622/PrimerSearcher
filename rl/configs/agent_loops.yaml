@@ -1,0 +1,28 @@
+- name: openseeker_agent
+  _target_: src.openseeker_agent_loop.OpenSeekerAgentLoop
+
+  # Regular research budget. Forced-answer attempts are additional.
+  max_assistant_turns: 150
+  max_tokens_per_turn: 8192
+  force_answer_reserve_tokens: 12288
+
+  # Policy/server resilience.
+  generation_max_retries: 5
+  generation_retry_base_seconds: 1
+  generation_timeout_seconds: 120
+  force_answer_max_attempts: 3
+  # A forced-answer round terminates the rollout after five API timeouts.
+  force_answer_timeout_attempts: 5
+  tool_timeout_seconds: 120
+
+  # Same duplicate-call thresholds as the production agent.
+  max_identical_tool_executions: 2
+  max_identical_tool_attempts: 5
+  max_consecutive_blocked_duplicates: 3
+
+  # Same behavior guards as the production agent.
+  early_answer_turns: 3
+  early_answer_seconds: 120
+  content_filter_max_redirects: 2
+  stalled_output_min_chars: 5
+

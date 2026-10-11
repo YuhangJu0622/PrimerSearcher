@@ -1,0 +1,22 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">PrimerSearcher logo</title>
+  <desc id="desc">An information network converging on a precise answer.</desc>
+  <rect width="512" height="512" rx="112" fill="#F8FAFC"/>
+  <g stroke="#0F766E" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M82 128L160 94L234 140L306 205L402 256" opacity=".7"/>
+    <path d="M70 207L141 178L230 201L302 230L402 256" opacity=".82"/>
+    <path d="M69 294L146 310L232 281L306 270L402 256" opacity=".82"/>
+    <path d="M89 376L157 402L234 342L306 291L402 256" opacity=".7"/>
+    <path d="M112 152L141 178L160 94M141 178L230 201M146 310L230 201M146 310L157 402M232 281L234 342M230 201L306 205M232 281L306 270M306 205L302 230L306 270L306 291" opacity=".48"/>
+  </g>
+  <g stroke="#F8FAFC" stroke-width="7">
+    <circle cx="82" cy="128" r="17" fill="#12314A"/><circle cx="160" cy="94" r="22" fill="#0F766E"/><circle cx="234" cy="140" r="17" fill="#12314A"/>
+    <circle cx="70" cy="207" r="24" fill="#0F766E"/><circle cx="141" cy="178" r="18" fill="#12314A"/><circle cx="230" cy="201" r="25" fill="#0F766E"/>
+    <circle cx="69" cy="294" r="17" fill="#12314A"/><circle cx="146" cy="310" r="25" fill="#0F766E"/><circle cx="232" cy="281" r="20" fill="#12314A"/>
+    <circle cx="89" cy="376" r="21" fill="#0F766E"/><circle cx="157" cy="402" r="16" fill="#12314A"/><circle cx="234" cy="342" r="24" fill="#0F766E"/>
+    <circle cx="306" cy="205" r="17" fill="#12314A"/><circle cx="302" cy="230" r="19" fill="#0F766E"/><circle cx="306" cy="270" r="18" fill="#12314A"/><circle cx="306" cy="291" r="14" fill="#0F766E"/>
+  </g>
+  <circle cx="421" cy="256" r="52" fill="#FFF7ED" stroke="#FB6A3A" stroke-width="10"/>
+  <circle cx="421" cy="256" r="25" fill="#FB6A3A"/>
+  <path d="M421 180V161M421 351V332M497 256H478M364 256H345" stroke="#FB6A3A" stroke-width="11" stroke-linecap="round"/>
+</svg>
