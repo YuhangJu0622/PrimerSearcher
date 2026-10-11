@@ -1,5 +1,6 @@
 <div align="center">
-  <table><tr><td><img src="docs/assets/primersearcher-logo.svg" alt="PrimerSearcher logo" width="128" /></td><td>&nbsp;&nbsp;&nbsp;</td><td><h1>PrimerSearcher</h1></td></tr></table>
+  <img src="docs/assets/primersearcher-logo.svg" alt="PrimerSearcher logo" width="128" />
+  <h1>PrimerSearcher</h1>
   <h3>Training Language Models for Autonomous Deep Search</h3>
   <p><a href="README_zh.md">简体中文</a></p>
   <hr />
